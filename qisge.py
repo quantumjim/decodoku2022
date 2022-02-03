@@ -9,6 +9,7 @@ from PIL import Image
 FPS = 10
 
 _cell = 32
+_fudge = [.975,.975,1.0125]
 _app = _App(width=28*_cell, height=16*_cell)
 
 _input =  {'key_presses': [], 'clicks': []}
@@ -118,7 +119,7 @@ class Sprite():
             elif name=='image_id':
                 _sprites[self.sprite_id].image = _images[val]
             elif name=='size':
-                _sprites[self.sprite_id].width = val*_cell
+                _sprites[self.sprite_id].width = val*_cell*_fudge[2]
         _changes = True
         
 
@@ -146,10 +147,10 @@ class Text():
         self.__dict__[name] = val
         if name[0]!='_':
             if name=='x':
-                _texts[self.text_id].x = val*_cell
+                _texts[self.text_id].x = val*_cell*_fudge[0]
                 self._update_background()
             elif name=='y':
-                _texts[self.text_id].y = val*_cell
+                _texts[self.text_id].y = val*_cell*_fudge[1]
                 self._update_background()
             if name=='width':
                 _texts[self.text_id].width = val*_cell
